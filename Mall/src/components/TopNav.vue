@@ -51,52 +51,52 @@ export default {
 
 <style lang="scss" scoped>
 .top-nav {
-  height: 68px;
+  height: 6.8rem;
   background-color: #ffffff;
   position: relative;
   color: #818181;
 
   // 左侧头像
   .top-nav-left {
-    width: 90px;
-    height: 90px;
+    width: 9rem;
+    height: 9rem;
     position: absolute;
-    top: -11px;
-    left: -20px;
+    top: -1.1rem;
+    left: -2rem;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
     cursor: pointer;
     img {
-      width: 90px;
-      height: 90px;
+      width: 9rem;
+      height: 9rem;
       float: left;
     }
 
     // 偏移UI组件位置
     .top-nav-left-dropdown-span {
-      width: 120px;
+      width: 12rem;
       display: block;
     }
   }
   .top-nav-left:hover {
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.33);
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.33);
   }
 
   // 右侧列表栏
   .top-nav-right {
     position: absolute;
-    right: 10px;
-    margin: 13px 0;
+    right: 1rem;
+    margin: 1.3rem 0;
     ul {
       display: flex;
-      font-size: 25px;
-      line-height: 40px;
+      font-size: 2.5rem;
+      line-height: 4rem;
       li {
         cursor: pointer;
-        margin: 0 20px;
+        margin: 0 2rem;
         svg {
-          font-size: 40px;
+          font-size: 4rem;
         }
       }
       li:hover {
@@ -108,17 +108,17 @@ export default {
 
 // 下拉菜单
 .top-nav-left-dropdown {
-  width: 140px;
-  height: 200px;
+  width: 14rem;
+  height: 20rem;
   // text-align: center;
-  font-size: 18px;
+  font-size: 1.8rem;
   color: #7e7e7e;
   li {
     cursor: pointer;
-    margin: 20px 13px;
+    margin: 2rem 1.3rem;
     svg {
-      margin: 0 5px;
-      font-size: 20px;
+      margin: 0 0.5rem;
+      font-size: 2rem;
     }
   }
   li:hover {
