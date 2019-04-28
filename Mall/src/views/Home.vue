@@ -28,6 +28,20 @@
     </div>
     <div class="content">
       <top-nav/>
+      <div class="content-center">
+        <div class="content-center-left">
+          <div class="filter">
+            <div class="filter-div">
+              <svg-icon icon-class="filter"/>
+              <span>筛选</span>
+            </div>
+          </div>
+          <div class="brand"></div>
+          <div class="price"></div>
+          <div class="key-word"></div>
+        </div>
+        <div class="content-center-right"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -64,6 +78,7 @@ export default {
     };
   },
   mounted() {
+    // 获取视口大小，响应式调整轮播图尺寸
     this.getViewport();
   },
   computed: {
@@ -73,9 +88,11 @@ export default {
     })
   },
   methods: {
+    // 监听resize事件
     getViewport() {
       window.addEventListener("resize", this.resizeThrottler, false);
     },
+    // 节流函数
     resizeThrottler() {
       if (!this.resizeTimeout) {
         this.resizeTimeout = setTimeout(() => {
@@ -84,8 +101,10 @@ export default {
         }, 66);
       }
     },
+    // 获取视口大小，响应式调整轮播图尺寸
     actualResizeHandler() {
-      this.viewport = parseInt((document.documentElement.clientWidth * 9) / 16) - 90;
+      this.viewport =
+        parseInt((document.documentElement.clientWidth * 9) / 16) - 90;
     }
   },
   components: {
@@ -175,12 +194,40 @@ export default {
   .content {
     height: 2000px;
     background-color: #efefef;
-    display: flex;
-    justify-content: center;
     .top-nav {
       margin: 35px 150px;
       border-radius: 5px;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+    .content-center {
+      margin: auto;
+      width: 80%;
+
+      // 左侧筛选栏
+      .content-center-left {
+        width: 356px;
+        height: 943px;
+        background-color: #ffffff;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        border-radius: 5px;
+        .filter {
+          float: left;
+          font-size: 25px;
+          margin: 10px 30px;
+          line-height: 36px;
+          display: flex;
+          align-items: center;
+          svg {
+            font-size: 30px;
+          }
+          .filter-div {
+            width: 306px;
+            text-align: left;
+            border-bottom: 1px solid rgba(112, 112, 112, 0.3);
+            padding: 8px 0;
+          }
+        }
+      }
     }
   }
 }
