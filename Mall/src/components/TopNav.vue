@@ -35,17 +35,25 @@
         <li>
           <svg-icon icon-class="shoppingcart"/>
         </li>
-        <li>
-          <svg-icon icon-class="search"/>
-        </li>
+        <search-input/>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import SearchInput from "./SearchInput";
 export default {
-  name: "top-nav"
+  name: "top-nav",
+  components: {
+    SearchInput
+  },
+  data() {
+    return {
+      searchShow: false,
+      searchInputFocus: false
+    };
+  }
 };
 </script>
 
@@ -88,6 +96,7 @@ export default {
     position: absolute;
     right: 1rem;
     margin: 1.3rem 0;
+
     ul {
       display: flex;
       font-size: 2.5rem;

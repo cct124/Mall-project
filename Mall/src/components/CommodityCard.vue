@@ -1,23 +1,26 @@
 <template>
   <div class="commodity-card">
     <div class="card-header">
-      <span>HUAWEI</span>
+      <span>{{ item.brand }}</span>
       <svg-icon icon-class="shoppingcart"/>
     </div>
     <div class="card-img">
-      <img src="./../images/eb12c480030de780.jpg" alt="商品图片">
+      <img :src="item.product_color_list[1].images_path[0]" alt="商品图片">
     </div>
     <div class="card-bottom">
-      <p class="card-bottom-p-1">HUAWEI nova 4</p>
-      <p class="card-bottom-p-2">4800万超广角三摄</p>
-      <p class="card-bottom-p-3">3099.00 元</p>
+      <p class="card-bottom-p-1">{{ item.name }}</p>
+      <p class="card-bottom-p-2">{{ item.goods_ids[0].product_feature_info.split(',')[0] }}</p>
+      <p class="card-bottom-p-3">{{ item.goods_ids[0].price_min }} 元</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "CommodityCard"
+  name: "CommodityCard",
+  props: {
+    item: Object
+  }
 };
 </script>
 
