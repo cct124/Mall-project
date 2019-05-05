@@ -33,7 +33,12 @@
           <web-filter/>
         </div>
         <div class="content-center-right">
-          <commodity-card v-for="(item, index) in commodityCardData" :key="index" :item="item"/>
+          <commodity-card
+            :productInfo="productInfo"
+            v-for="(item, index) in commodityCardData"
+            :key="index"
+            :item="item"
+          />
         </div>
       </div>
       <button class="content-button-more">加载更多</button>
@@ -110,6 +115,9 @@ export default {
     actualResizeHandler() {
       this.viewport =
         parseInt((document.documentElement.clientWidth * 9) / 16) - 90;
+    },
+    productInfo() {
+      this.$router.push({ name: "productinfo" });
     }
   }
 };

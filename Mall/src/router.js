@@ -15,6 +15,11 @@ export default new Router({
       path: '/productinfo',
       name: 'productinfo',
       component: () => import('./views/ProductInfo.vue')
+    },
+    {
+      path: '/shoppingcart',
+      name: 'shoppingcart',
+      component: () => import('./views/ShoppingCart.vue')
     }
   ]
 })

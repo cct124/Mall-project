@@ -1,5 +1,5 @@
 <template>
-  <div class="commodity-card">
+  <div class="commodity-card" @click="productInfo">
     <div class="card-header">
       <span>{{ item.brand }}</span>
       <svg-icon icon-class="shoppingcart"/>
@@ -19,7 +19,8 @@
 export default {
   name: "CommodityCard",
   props: {
-    item: Object
+    item: Object,
+    productInfo: Function
   }
 };
 </script>

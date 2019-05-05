@@ -28,7 +28,7 @@
     </div>
     <div class="top-nav-right">
       <ul>
-        <li>首页</li>
+        <router-link to="/" tag="li">首页</router-link>
         <li>iPhone</li>
         <li>HUAWEI</li>
         <li>VIVO</li>
@@ -59,6 +59,7 @@ export default {
 
 <style lang="scss" scoped>
 .top-nav {
+  margin: 3.5rem 15rem;
   height: 6.8rem;
   background-color: #ffffff;
   position: relative;
