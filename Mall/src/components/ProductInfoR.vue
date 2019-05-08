@@ -114,11 +114,11 @@ export default {
       this.productQuantity++;
     }
   },
-  filters: {
-    productPrice(value) {
-      return "￥" + value.toFixed(2);
-    }
-  }
+  // filters: {
+  //   productPrice(value) {
+  //     return "￥" + value.toFixed(2);
+  //   }
+  // }
 };
 </script>
 

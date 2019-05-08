@@ -10,7 +10,7 @@
     <div class="card-bottom">
       <p class="card-bottom-p-1">{{ item.name }}</p>
       <p class="card-bottom-p-2">{{ item.goods_ids[0].product_feature_info.split(',')[0] }}</p>
-      <p class="card-bottom-p-3">{{ item.goods_ids[0].price_min }} 元</p>
+      <p class="card-bottom-p-3">{{ item.goods_ids[0].price_min | productPrice }}</p>
     </div>
   </div>
 </template>

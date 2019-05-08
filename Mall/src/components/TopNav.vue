@@ -32,9 +32,9 @@
         <li>iPhone</li>
         <li>HUAWEI</li>
         <li>VIVO</li>
-        <li>
+        <router-link to="/shoppingcart" tag="li">
           <svg-icon icon-class="shoppingcart"/>
-        </li>
+        </router-link>
         <search-input/>
       </ul>
     </div>

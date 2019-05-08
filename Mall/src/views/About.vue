@@ -1,12 +1,16 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <login/>
   </div>
 </template>
 
 <script>
+import Login from "./../components/Login";
 export default {
-  name: "about"
+  name: "about",
+  components: {
+    Login
+  }
 };
 </script>
 <style lang="scss" scoped>

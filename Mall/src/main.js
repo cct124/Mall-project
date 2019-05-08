@@ -19,6 +19,10 @@ Vue.use(DropdownItem);
 
 Vue.config.productionTip = false;
 
+Vue.filter('productPrice', (value) => {
+  return "￥" + value.toFixed(2);
+})
+
 new Vue({
   router,
   store,
