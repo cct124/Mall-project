@@ -1,8 +1,47 @@
 <template>
   <div id="app">
+    <transition name="fade">
+      <login v-if="loginShow"/>
+    </transition>
     <router-view/>
   </div>
 </template>
+
+<script>
+import Login from "./components/Login";
+import { mapState } from "vuex";
+export default {
+  name: "app",
+  data() {
+    return {
+      getScrollTop: null
+    };
+  },
+  components: {
+    Login
+  },
+  computed: {
+    ...mapState({
+      loginShow: state => state.userData.loginShow
+    })
+  },
+  methods: {
+    setScrollTp() {
+      document.documentElement.scrollTop = this.getScrollTop;
+    }
+  },
+  watch: {
+    loginShow() {
+      this.getScrollTop = document.documentElement.scrollTop;
+      if (this.loginShow) {
+        window.addEventListener("scroll", this.setScrollTp);
+      } else {
+        window.removeEventListener("scroll", this.setScrollTp);
+      }
+    }
+  }
+};
+</script>
 
 <style lang="scss">
 html {
@@ -17,6 +56,16 @@ html {
   text-align: center;
   background-color: #efefef;
   color: #535353;
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.2s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+}
+.overflowapp {
+  overflow: hidden;
 }
 #nav {
   padding: 3rem;

@@ -182,7 +182,7 @@ export default {
           return item.select;
         });
       },
-      set(value) {
+      set() {
         let bool = this.selectAll;
         this.orderInformation.forEach(item => {
           item.select = !bool;

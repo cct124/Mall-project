@@ -16,5 +16,8 @@ module.exports = {
       .options({
         symbolId: "icon-[name]"
       });
+  },
+  devServer: {
+    open: "Google Chrome"
   }
 };

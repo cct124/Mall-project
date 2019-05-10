@@ -151,7 +151,7 @@ export function buffer(obj, json, rate = 0.08, fn) {
                 fn();
             }
         }
-    }, 20);
+    });
 }
 
 export function throttler(Callback) {

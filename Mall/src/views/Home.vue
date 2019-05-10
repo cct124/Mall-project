@@ -3,7 +3,9 @@
     <div class="top-carousel">
       <div class="top-carousel-nav">
         <div class="top-carousel-nav-content">
-          <svg-icon icon-class="category"/>
+          <span @click="setLoginShow" title="登陆-注册">
+            <svg-icon icon-class="login_user"/>
+          </span>
           <div class="top-carousel-nav-right">
             <ul>
               <li>首页</li>
@@ -50,7 +52,7 @@
 
 <script>
 // @ is an alias to /src
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { throttler } from "./../assets/js/animation.js";
 import TopNav from "./../components/TopNav";
 import CommodityCard from "./../components/CommodityCard";
@@ -103,6 +105,7 @@ export default {
     })
   },
   methods: {
+    ...mapActions(["setLoginShow"]),
     // 监听resize事件
     getViewport() {
       window.addEventListener(
@@ -145,7 +148,7 @@ export default {
         color: rgba(255, 255, 255, 0.45);
         z-index: 3;
         svg {
-          font-size: 4rem;
+          font-size: 2.5rem;
           cursor: pointer;
         }
         svg:hover {

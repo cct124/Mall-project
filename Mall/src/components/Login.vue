@@ -1,9 +1,16 @@
 <template>
-  <div class="login">
+  <div class="login" @click.self="setLoginShow">
     <div class="login-box">
       <div class="login-header">
-        <div class="signin" @click="loginShow=!loginShow">Sign In</div>
-        <div class="signup">Sign Up</div>
+        <div ref="radiusOne" class="login-header-radius">
+          <div ref="signinDiv" class="signin" @click.stop="signinShow('signin')">Sign In</div>
+          <div ref="signupDiv" class="signup" @click.stop="signinShow('signup')">Sign Up</div>
+        </div>
+        <div ref="radiusTwo" class="login-header-radius2">
+          <span @click.stop="setLoginShow">
+            <svg-icon icon-class="close"/>
+          </span>
+        </div>
       </div>
       <div ref="signin" class="login-content-signin">
         <div class="signin-username">
@@ -55,6 +62,7 @@
 
 <script>
 import { buffer } from "./../assets/js/animation.js";
+import { mapActions } from "vuex";
 export default {
   name: "Login",
   data() {
@@ -63,14 +71,67 @@ export default {
     };
   },
   methods: {
-    signinShow() {
+    // closeLogin() {
+    //   this.$store.dispatch("setLoginShow");
+    // },
+    ...mapActions(["setLoginShow"]),
+    // Tab切换动画
+    signinShow(value) {
       let signinElement = this.$refs.signin;
       let signupElement = this.$refs.signup;
-      buffer(signinElement, { opacity: 0 }, 0.2, () => {
-        signinElement.style.display = "none";
-        signupElement.style.display = "flex";
-        buffer(signupElement, { opacity: 1 });
-      });
+      let signinDiv = this.$refs.signinDiv;
+      let signupDiv = this.$refs.signupDiv;
+      let radiusOne = this.$refs.radiusOne;
+      let radiusTwo = this.$refs.radiusTwo;
+
+      function animationFn(dispalyNone, displayBlock, callback) {
+        radiusTwo.style.borderBottomLeftRadius = "0";
+        radiusOne.style.background = "";
+        radiusOne.style.backgroundColor = "#2b3457";
+        callback();
+        buffer(dispalyNone, { opacity: 0 }, 0.1, () => {
+          dispalyNone.style.display = "none";
+          displayBlock.style.display = "flex";
+          buffer(displayBlock, { opacity: 1 });
+        });
+      }
+
+      if (value === "signin") {
+        animationFn(signupElement, signinElement, () => {
+          buffer(signinDiv, { opacity: 0 }, 0.3, () => {
+            signinDiv.style.backgroundColor = "#ffffff";
+            signinDiv.style.color = "#2b3457";
+            signupDiv.style.borderBottomLeftRadius = "0.4rem";
+            buffer(signinDiv, { opacity: 1 }, 0.3);
+          });
+          buffer(signupDiv, { opacity: 0 }, 0.3, () => {
+            signupDiv.style.backgroundColor = "#2b3457";
+            signupDiv.style.color = "#ffffff";
+            buffer(signupDiv, { opacity: 1 }, 0.3, () => {
+              radiusOne.style.background = "linear-gradient(#2b3457, #ffffff)";
+            });
+          });
+        });
+      }
+      if (value === "signup") {
+        animationFn(signinElement, signupElement, () => {
+          buffer(signinDiv, { opacity: 0 }, 0.3, () => {
+            signinDiv.style.backgroundColor = "#2b3457";
+            signinDiv.style.color = "#ffffff";
+            buffer(signinDiv, { opacity: 1 }, 0.3);
+          });
+          buffer(signupDiv, { opacity: 0 }, 0.3, () => {
+            signupDiv.style.backgroundColor = "#ffffff";
+            signupDiv.style.color = "#2b3457";
+            signupDiv.style.borderTopLeftRadius = "0.4rem";
+            signinDiv.style.borderBottomRightRadius = "0.4rem";
+            radiusTwo.style.borderBottomLeftRadius = "0.4rem";
+            buffer(signupDiv, { opacity: 1 }, 0.3, () => {
+              radiusOne.style.background = "linear-gradient(#2b3457, #ffffff)";
+            });
+          });
+        });
+      }
     }
   }
 };
@@ -78,18 +139,22 @@ export default {
 
 <style scoped lang="scss">
 .login {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -23.7rem;
-  margin-top: -20.8rem;
-  z-index: 1;
+  z-index: 4;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
   .login-box {
     width: 47.5rem;
     height: 41.6rem;
     background-color: #ffffff;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     border-radius: 0.4rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -23.7rem;
+    margin-top: -20.8rem;
     .login-header {
       height: 5.83rem;
       background: linear-gradient(#2b3457, #ffffff);
@@ -97,28 +162,47 @@ export default {
       border-top-right-radius: 0.4rem;
       display: flex;
       align-items: center;
-      .signin {
-        color: #2b3457;
-        background-color: #ffffff;
+      .login-header-radius {
+        display: inherit;
+        align-items: inherit;
         height: 100%;
-        text-align: center;
-        line-height: 5.83rem;
-        width: 14.4rem;
         border-top-left-radius: 0.4rem;
-        border-top-right-radius: 0.4rem;
-        cursor: pointer;
+        .signin {
+          color: #2b3457;
+          background-color: #ffffff;
+          height: 100%;
+          text-align: center;
+          line-height: 5.83rem;
+          width: 14.4rem;
+          border-top-left-radius: 0.4rem;
+          border-top-right-radius: 0.4rem;
+          cursor: pointer;
+        }
+        .signup {
+          width: 14.4rem;
+          height: 100%;
+          color: #ffffff;
+          line-height: 5.83rem;
+          text-align: center;
+          border-bottom-left-radius: 0.4rem;
+          border-top-right-radius: 0.4rem;
+          background-color: #2b3457;
+          cursor: pointer;
+        }
       }
-      .signup {
-        width: 29.5rem;
-        height: 100%;
-        color: #ffffff;
-        line-height: 5.83rem;
-        text-align: left;
-        padding-left: 4rem;
-        border-bottom-left-radius: 0.4rem;
-        border-top-right-radius: 0.4rem;
+      .login-header-radius2 {
         background-color: #2b3457;
-        cursor: pointer;
+        border-top-right-radius: 0.4rem;
+        width: 100%;
+        height: 100%;
+        line-height: 5.83rem;
+        text-align: right;
+        padding-right: 2rem;
+        svg {
+          font-size: 2rem;
+          color: #ffffff;
+          cursor: pointer;
+        }
       }
     }
     .login-content-signup,
@@ -180,6 +264,9 @@ export default {
       opacity: 0;
       display: none;
     }
+  }
+  .radiusOne {
+    background: linear-gradient(#2b3457, #ffffff);
   }
 }
 </style>

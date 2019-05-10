@@ -40,13 +40,13 @@ export default {
           buffer(
             input,
             { width: 200, opacity: 1, marginRight: 12, paddingLeft: 7 },
-            0.3
+            0.05
           );
         } else {
           buffer(
             input,
             { width: 0, opacity: 0, marginRight: 0, paddingLeft: 0 },
-            0.3,
+            0.05,
             () => {
               input.style.display = "none";
             }
