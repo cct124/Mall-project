@@ -216,11 +216,6 @@ export default {
 
   // 中部内容样式
   .content {
-    .top-nav {
-      margin: 3.5rem 15rem;
-      border-radius: 0.2rem;
-      box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05);
-    }
     // 清除高度塌陷
     .content-center:after {
       display: block;

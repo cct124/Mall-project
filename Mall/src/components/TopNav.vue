@@ -75,6 +75,9 @@ export default {
   background-color: #ffffff;
   position: relative;
   color: #818181;
+  margin: 3.5rem 15rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05);
 
   // 左侧头像
   .top-nav-left {

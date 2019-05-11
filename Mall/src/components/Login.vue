@@ -12,7 +12,7 @@
           </span>
         </div>
       </div>
-      <div ref="signin" class="login-content-signin">
+      <div ref="signin" style="display:flex;" class="login-content-signin">
         <div class="signin-username">
           <svg-icon icon-class="nickname"/>
           <input class="signin-input" id="username" name="username" type="text" placeholder="name">
@@ -29,7 +29,7 @@
         </div>
         <div class="signin-button">登陆</div>
       </div>
-      <div ref="signup" class="login-content-signup">
+      <div ref="signup" style="display:none;" class="login-content-signup">
         <div class="signup-username">
           <svg-icon icon-class="nickname"/>
           <input
@@ -79,6 +79,10 @@ export default {
     signinShow(value) {
       let signinElement = this.$refs.signin;
       let signupElement = this.$refs.signup;
+      if (value === "signin" && signinElement.style.display === "flex") return;
+      if (value === "signup" && signupElement.style.display === "flex") return;
+      // window.getComputedStyle(signinElement).display === "flex";
+
       let signinDiv = this.$refs.signinDiv;
       let signupDiv = this.$refs.signupDiv;
       let radiusOne = this.$refs.radiusOne;
@@ -149,7 +153,7 @@ export default {
     height: 41.6rem;
     background-color: #ffffff;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-    border-radius: 0.2rem;
+    border-radius: 0.4rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -250,7 +254,7 @@ export default {
         width: 33rem;
         height: 5.83rem;
         background-color: #2a80cc;
-        border-radius: 0.2rem;
+        border-radius: 0.4rem;
         line-height: 5.83rem;
         color: #ffffff;
         margin-top: 5rem;
