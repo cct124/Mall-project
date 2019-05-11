@@ -69,7 +69,7 @@ export default {
     width: 0;
     height: 2.6rem;
     margin-right: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.2rem;
     border: 1px solid #a2a2a2;
     padding-left: 0.6rem;
     display: none;

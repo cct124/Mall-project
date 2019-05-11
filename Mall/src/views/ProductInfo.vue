@@ -71,7 +71,7 @@ export default {
     .product-info-content-right {
       background-color: #ffffff;
       box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05);
-      border-radius: 0.5rem;
+      border-radius: 0.2rem;
     }
     .product-info-content-left {
       width: 33%;

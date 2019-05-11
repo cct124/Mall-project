@@ -189,7 +189,7 @@ export default {
         margin-right: 2.3rem;
         width: 10.5rem;
         height: 3.75rem;
-        border-radius: 0.4rem;
+        border-radius: 0.2rem;
         border: 1px solid #707070;
         cursor: pointer;
         margin-bottom: 1rem;
@@ -215,7 +215,7 @@ export default {
         margin-bottom: 1.75rem;
         width: 24rem;
         height: 3.75rem;
-        border-radius: 0.4rem;
+        border-radius: 0.2rem;
         border: 1px solid #707070;
         cursor: pointer;
       }
@@ -232,7 +232,7 @@ export default {
     margin: 10rem 5rem 5rem;
     .product-info-r-shopping-add {
       border: 1px solid #707070;
-      border-radius: 0.4rem;
+      border-radius: 0.2rem;
       width: 9.25rem;
       height: 6.41rem;
       display: flex;
@@ -270,7 +270,7 @@ export default {
       margin-left: 3rem;
       width: 22rem;
       height: 7.5rem;
-      border-radius: 0.4rem;
+      border-radius: 0.2rem;
       font-size: 2.9rem;
       color: #ffffff;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);

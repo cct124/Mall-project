@@ -224,7 +224,7 @@ export default {
 .recommended > li,
 .order-information li {
   background-color: #ffffff;
-  border-radius: 0.4rem;
+  border-radius: 0.2rem;
   box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05);
 }
 

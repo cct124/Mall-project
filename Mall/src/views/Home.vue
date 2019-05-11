@@ -218,7 +218,7 @@ export default {
   .content {
     .top-nav {
       margin: 3.5rem 15rem;
-      border-radius: 0.5rem;
+      border-radius: 0.2rem;
       box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05);
     }
     // 清除高度塌陷
@@ -238,7 +238,7 @@ export default {
         width: 27%;
         background-color: #ffffff;
         box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05);
-        border-radius: 0.5rem;
+        border-radius: 0.2rem;
         float: left;
       }
 
@@ -264,7 +264,7 @@ export default {
       color: #9b9b9b;
       letter-spacing: 0.5rem;
       cursor: pointer;
-      border-radius: 0.4rem;
+      border-radius: 0.2rem;
       margin: 50px 0;
     }
     .content-button-more:hover {

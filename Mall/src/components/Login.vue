@@ -149,7 +149,7 @@ export default {
     height: 41.6rem;
     background-color: #ffffff;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-    border-radius: 0.4rem;
+    border-radius: 0.2rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -250,7 +250,7 @@ export default {
         width: 33rem;
         height: 5.83rem;
         background-color: #2a80cc;
-        border-radius: 0.4rem;
+        border-radius: 0.2rem;
         line-height: 5.83rem;
         color: #ffffff;
         margin-top: 5rem;

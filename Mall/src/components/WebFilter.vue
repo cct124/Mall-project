@@ -124,7 +124,7 @@ export default {
           width: 8rem;
           height: 2.5rem;
           border: 1px solid #707070;
-          border-radius: 0.5rem;
+          border-radius: 0.2rem;
           margin: 0 1.2rem;
           padding-left: 0.4rem;
         }

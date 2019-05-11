@@ -53,16 +53,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .personal-center {
+  .shopping-center-nav{
+
+  }
   .personal-center-content {
-    width: 70%;
+    width: 75%;
     display: flex;
     margin: 7.1rem auto 10rem auto;
     // 中部左侧栏
     .content-left {
-      width: 25rem;
+      width: 20%;
       height: 43rem;
       background-color: #ffffff;
-      border-radius: 0.4rem;
+      border-radius: 0.2rem;
       box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05);
       font-size: 2rem;
       color: rgba(84, 84, 84, 0.7);
@@ -93,6 +96,7 @@ export default {
     // 中部右侧栏
     .content-right {
       margin-left: 5%;
+      width: 75%;
     }
   }
 }
