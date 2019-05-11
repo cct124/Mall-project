@@ -147,12 +147,23 @@ export default {
         position: absolute;
         color: rgba(255, 255, 255, 0.45);
         z-index: 3;
+        span {
+          display: block;
+          width: 3.5rem;
+          height: 3.5rem;
+          border: 1px solid rgba(255, 255, 255, 0.45);
+          border-radius: 50%;
+          transition: all 0.1s;
+        }
         svg {
           font-size: 2.5rem;
           cursor: pointer;
+          margin-top: 0.4rem;
         }
-        svg:hover {
+        span:hover {
           color: #ffffff;
+          border: 1px solid rgba(255, 255, 255, 1);
+          transform: scale(1.05);
         }
         .top-carousel-nav-right {
           ul {
