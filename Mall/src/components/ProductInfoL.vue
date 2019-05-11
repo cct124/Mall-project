@@ -101,9 +101,6 @@ export default {
       if (left < -(this.minImgWidth / 2) && value == "left") {
         buffer(element, { left: left + this.minImgWidth }, 0.2);
       }
-    },
-    test(path) {
-      console.log(path);
     }
   },
   computed: {}

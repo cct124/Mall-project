@@ -27,7 +27,7 @@
             placeholder="password"
           >
         </div>
-        <div class="signin-button">登陆</div>
+        <div class="signin-button" @click="getTextPort({name:'app'})">登陆</div>
       </div>
       <div ref="signup" style="display:none;" class="login-content-signup">
         <div class="signup-username">
@@ -74,7 +74,7 @@ export default {
     // closeLogin() {
     //   this.$store.dispatch("setLoginShow");
     // },
-    ...mapActions(["setLoginShow"]),
+    ...mapActions(["setLoginShow", "getTextPort"]),
     // Tab切换动画
     signinShow(value) {
       let signinElement = this.$refs.signin;

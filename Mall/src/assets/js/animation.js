@@ -69,7 +69,6 @@ export function constant(obj, target, speed) {
             clearInterval(obj.timer);
 
             obj.style.left = target + "px";
-            console.log(obj.offsetLeft, target);
         }
     }, 20);
 
