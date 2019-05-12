@@ -1,5 +1,5 @@
 <template>
-  <div class="login" @click.self="setLoginShow">
+  <div class="login">
     <div class="login-box">
       <div class="login-header">
         <div ref="radiusOne" class="login-header-radius">
@@ -27,7 +27,7 @@
             placeholder="password"
           >
         </div>
-        <div class="signin-button" @click="getTextPort({name:'app'})">登陆</div>
+        <div class="signin-button buttonPass" @click="getTextPort({name:'app'})">登陆</div>
       </div>
       <div ref="signup" style="display:none;" class="login-content-signup">
         <div class="signup-username">
@@ -38,11 +38,24 @@
             name="username"
             type="text"
             placeholder="name"
+            v-model.trim="signUpData.userName"
+            @input="regexpVerification('signupName')"
           >
+          <span ref="signupName" class="verification">账户名为字母和数字，开头字母，长度4-16位</span>
         </div>
         <div class="signin-email">
           <svg-icon icon-class="email"/>
-          <input class="signin-input" id="email" name="email" type="email" placeholder="email">
+          <input
+            class="signin-input"
+            id="email"
+            name="email"
+            type="email"
+            placeholder="email"
+            v-model="signUpData.email"
+            autocomplete="off"
+            @input="regexpVerification('signupEmail')"
+          >
+          <span ref="signupEmail" class="verification">邮箱格式不正确</span>
         </div>
         <div class="signin-password">
           <svg-icon icon-class="password"/>
@@ -52,9 +65,17 @@
             name="password"
             type="password"
             placeholder="password"
+            v-model="signUpData.password"
+            @input="regexpVerification('signupPassword')"
           >
+          <span ref="signupPassword" class="verification">密码必须包含大小写字母，长度6-16位</span>
         </div>
-        <div class="signin-button">注册</div>
+        <div
+          @click="signupPost"
+          :class="{ buttonPass: signinButton }"
+          ref="signinButton"
+          class="signin-button"
+        >注册</div>
       </div>
     </div>
   </div>
@@ -67,14 +88,65 @@ export default {
   name: "Login",
   data() {
     return {
-      loginShow: true
+      loginShow: true,
+      signUpData: {
+        userName: null,
+        email: null,
+        password: null
+      },
+      signUpV: {
+        userName: false,
+        email: false,
+        password: false
+      }
     };
   },
   methods: {
+    ...mapActions(["setLoginShow", "postSignUpPort"]),
     // closeLogin() {
     //   this.$store.dispatch("setLoginShow");
     // },
-    ...mapActions(["setLoginShow", "getTextPort"]),
+    // 正则表达式验证表单
+    regexpVerification(value) {
+      let verification = (pattern, value, element) => {
+        if (pattern.test(this.signUpData[value])) {
+          this.$refs[element].style.display = "none";
+          this.$refs[element].parentElement.style.borderBottom =
+            "1px solid #24e800";
+          this.signUpV[value] = true;
+        } else {
+          this.$refs[element].style.display = "block";
+          this.$refs[element].parentElement.style.borderBottom =
+            "1px solid red";
+          this.signUpV[value] = false;
+        }
+      };
+      // eslint-disable-next-line
+      const loginName = /^[a-zA-Z][a-zA-Z0-9]{3,15}$/;
+      // eslint-disable-next-line
+      const loginEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      // eslint-disable-next-line
+      const loginPassword = /^(?=.*[a-zA-Z])(?=.*\d)(?=.[~!@#$%^&*()_+`\-={}:";'<>?,.\/]{0,}).{6,16}$/;
+
+      switch (value) {
+        case "signupName":
+          verification(loginName, "userName", "signupName");
+          break;
+        case "signupEmail":
+          verification(loginEmail, "email", "signupEmail");
+          break;
+        case "signupPassword":
+          verification(loginPassword, "password", "signupPassword");
+          break;
+
+        default:
+          break;
+      }
+    },
+    signupPost() {
+      if (!this.signinButton) return;
+      this.postSignUpPort(this.signUpData);
+    },
     // Tab切换动画
     signinShow(value) {
       let signinElement = this.$refs.signin;
@@ -136,6 +208,13 @@ export default {
           });
         });
       }
+    }
+  },
+  computed: {
+    signinButton() {
+      return (
+        this.signUpV.userName && this.signUpV.email && this.signUpV.password
+      );
     }
   }
 };
@@ -225,6 +304,7 @@ export default {
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid #cfcfcf;
+        position: relative;
         ::-webkit-input-placeholder {
           color: #cccccc;
         }
@@ -241,6 +321,17 @@ export default {
       .signin-username {
         margin-bottom: 2rem;
       }
+      .verification {
+        position: absolute;
+        top: 3.4rem;
+        display: block;
+        font-size: 1rem;
+        color: red;
+        letter-spacing: 0.1rem;
+        display: none;
+        text-align: left;
+        left: 1rem;
+      }
       .signup-username {
         margin-top: 5rem;
       }
@@ -253,15 +344,19 @@ export default {
       .signin-button {
         width: 33rem;
         height: 5.83rem;
-        background-color: #2a80cc;
+        // background-color: #2a80cc;
+        background-color: #7a8086;
         border-radius: 0.4rem;
         line-height: 5.83rem;
         color: #ffffff;
         margin-top: 5rem;
         cursor: pointer;
       }
+      .buttonPass {
+        background-color: #2a80cc;
+      }
       .signin-button:hover {
-        background-color: #358cd8;
+        opacity: 0.9;
       }
     }
     .login-content-signup {
