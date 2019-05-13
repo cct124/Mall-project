@@ -4,10 +4,25 @@ import ajax from "./ajax";
 const BASE_URL = "/api";
 
 // test
-export const getTest = params => ajax(BASE_URL + "/user/test/post", params, "POST");
+export const getTest = payload =>
+  ajax(BASE_URL + "/user/test/post", { payload, type: "POST" });
 
 // 注册
-export const signupPOST = params => ajax(BASE_URL + "/user/post/signup", params, "POST");
+export const signupPOST = payload =>
+  ajax(BASE_URL + "/user/post/signup", { payload, type: "POST" });
 
 // 登陆
-export const signinPOST = params => ajax(BASE_URL + "/user/post/signin", params, "POST");
+export const signinPOST = payload =>
+  ajax(BASE_URL + "/user/post/signin", { payload, type: "POST" });
+
+// 获取用户信息
+export const userInfoGET = () =>
+  ajax(BASE_URL + "/user/get/userinfo", { authToken: "token" });
+
+// 获取用户信息
+export const setUserInfoPOST = payload =>
+  ajax(BASE_URL + "/user/get/userinfo", {
+    payload,
+    type: "POST",
+    authToken: "token"
+  });

@@ -9,13 +9,17 @@
 
 <script>
 import Login from "./components/Login";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+import { localfetch } from "./assets/js/storage.js";
 export default {
   name: "app",
   data() {
     return {
       getScrollTop: null
     };
+  },
+  mounted() {
+    this.statusCheck();
   },
   components: {
     Login
@@ -26,8 +30,13 @@ export default {
     })
   },
   methods: {
+    ...mapActions(["getUserInfo"]),
     setScrollTp() {
       document.documentElement.scrollTop = this.getScrollTop;
+    },
+    statusCheck() {
+      let token = localfetch("mall_token");
+      if (token) this.getUserInfo();
     }
   },
   watch: {

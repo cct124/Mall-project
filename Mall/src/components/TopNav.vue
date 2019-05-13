@@ -1,26 +1,29 @@
 <template>
   <div class="top-nav">
     <div class="top-nav-left">
-      <el-dropdown class="left-avatar" v-if="userInfo">
+      <el-dropdown class="left-avatar" v-if="userInfo.user_name">
         <span class="top-nav-left-dropdown-span">
           <img src="./../images/Avatar.png">
         </span>
         <el-dropdown-menu slot="dropdown">
           <ul class="top-nav-left-dropdown">
-            <li>
+            <router-link tag="li" :to="{name:'personal'}">
               <svg-icon icon-class="Personal"/>个人中心
-            </li>
-            <li>
+            </router-link>
+            <router-link tag="li" :to="{name:'shoppingcart'}">
               <svg-icon icon-class="shoppingcart"/>购物车
-            </li>
-            <li>
+            </router-link>
+            <router-link tag="li" :to="{name:'order'}">
               <svg-icon icon-class="Order"/>订单管理
-            </li>
-            <li>
+            </router-link>
+            <router-link tag="li" :to="{name:'message'}">
               <svg-icon icon-class="message"/>消息中心
-            </li>
-            <li>
+            </router-link>
+            <router-link tag="li" :to="{name:'service'}">
               <svg-icon icon-class="service"/>售后服务
+            </router-link>
+            <li>
+              <svg-icon icon-class="sign-in"/>退出登陆
             </li>
           </ul>
         </el-dropdown-menu>
@@ -161,7 +164,6 @@ export default {
 // 下拉菜单
 .top-nav-left-dropdown {
   width: 14rem;
-  height: 20rem;
   // text-align: center;
   font-size: 1.8rem;
   color: #7e7e7e;

@@ -8,7 +8,7 @@
     </div>
     <div class="personal-right">
       <ul>
-        <li v-for="(items, index) in userInfo.info" :key="index">
+        <li v-for="(items, index) in stateUserInfo.info" :key="index">
           <span>{{items.item}}</span>
           <span v-if="items.placeholder !== 'Nickname'">{{items.value}}</span>
           <input
@@ -18,6 +18,8 @@
             id="user_name"
             v-model.trim="items.value"
             :placeholder="items.placeholder"
+            @input="nicknameChange"
+            autocomplete="off"
           >
         </li>
       </ul>
@@ -30,8 +32,8 @@
         </transition>
         <div v-if="!userChange"></div>
         <div class="right">
-          <span>{{userInfo.date.item}}</span>
-          <span>{{userInfo.date.value}}</span>
+          <span>{{stateUserInfo.date.item}}</span>
+          <span>{{stateUserInfo.date.value}}</span>
         </div>
       </div>
     </div>
@@ -39,72 +41,40 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "personal",
   data() {
     return {
       userChange: false,
-      copyUserInfo: null,
-      userInfo: {
-        info: [
-          {
-            item: "昵称：",
-            value: "Jane",
-            placeholder: "Nickname"
-          },
-          {
-            item: "账号：",
-            value: "abc123",
-            placeholder: "User Name"
-          },
-          {
-            item: "邮箱：",
-            value: "727751354@qq.com",
-            placeholder: "Email"
-          },
-          {
-            item: "电话：",
-            value: "155****6511",
-            placeholder: "Phone"
-          }
-        ],
-        date: {
-          item: "注册时间：",
-          value: "2019-05-11"
-        }
-      }
+      copyUserInfo: null
     };
   },
+  computed: {
+    ...mapGetters(["stateUserInfo"])
+  },
   methods: {
+    ...mapActions(["getUserInfo"]),
     defineStatus(value) {
       new Promise((resolve, reject) => {
         if (value === "define") {
           resolve();
         }
         if (value === "cancel") {
-          this.userInfo = JSON.parse(JSON.stringify(this.copyUserInfo));
+          this.getUserInfo();
           reject();
         }
       }).then(
         () => {
           this.userChange = false;
-          this.copyUserInfo = JSON.parse(JSON.stringify(this.userInfo));
         },
         () => {
           this.userChange = false;
         }
       );
-    }
-  },
-  mounted() {
-    this.copyUserInfo = JSON.parse(JSON.stringify(this.userInfo));
-  },
-  watch: {
-    userInfo: {
-      handler() {
-        this.userChange = true;
-      },
-      deep: true
+    },
+    nicknameChange() {
+      this.userChange = true;
     }
   }
 };

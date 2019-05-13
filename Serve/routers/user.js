@@ -1,8 +1,12 @@
 const Router = require("koa-router");
 const user = new Router();
-const query = require("./../db/async-db");
+const { query, jwtVerify } = require("./../db/async-db");
 const md5 = require("blueimp-md5");
 const moment = require("moment");
+const jwt = require("jsonwebtoken");
+
+const key = "shared-secret";
+
 // GET测试
 user.get("/test", async ctx => {
   let sql = "SELECT * FROM user";
@@ -15,6 +19,47 @@ user.post("/test/post", async ctx => {
   console.log(moment().format("YYYY-MM-DD"));
   console.log(ctx.request.body);
   ctx.body = ctx.request.body;
+});
+
+user.get("/get/userinfo", async ctx => {
+  const token = ctx.header.authorization;
+  let user_name = null;
+  let user_id = null;
+  await jwtVerify(token, key)
+    .then(decoded => {
+      user_name = decoded.user_name;
+      user_id = decoded.user_id;
+    })
+    .catch(error => {
+      console.log("令牌过期或非法令牌");
+    });
+
+  const sql =
+    "SELECT user_id, user_name, email, phone, nickname, date FROM user_data WHERE user_name=? AND user_id=?";
+  await query(sql, [user_name, user_id])
+    .then(result => {
+      if (result != 0) {
+        result = JSON.parse(JSON.stringify(result))[0];
+        result.date = moment(result.date).format("YYYY-MM-DD");
+        ctx.body = {
+          code: 1,
+          message: "查询成功",
+          data: result
+        };
+      } else {
+        ctx.body = {
+          code: 0,
+          message: "查询失败"
+        };
+      }
+    })
+    .catch(error => {
+      ctx.body = {
+        code: 2,
+        message: "查询失败"
+      };
+      throw error;
+    });
 });
 
 user.post("/post/signin", async ctx => {
@@ -30,11 +75,21 @@ user.post("/post/signin", async ctx => {
           message: "用户名或密码错误"
         };
       } else {
-        result[0].date = moment(result[0].date).format("YYYY-MM-DD");
+        result = JSON.parse(JSON.stringify(result))[0];
+        result.date = moment(result.date).format("YYYY-MM-DD");
+        const token = jwt.sign(
+          {
+            user_name: result.user_name,
+            user_id: result.user_id
+          },
+          key,
+          { expiresIn: 180 }
+        );
         ctx.body = {
           code: 1,
           message: "登陆成功",
-          data: JSON.parse(JSON.stringify(result))[0]
+          data: result,
+          token
         };
       }
     }
@@ -43,7 +98,6 @@ user.post("/post/signin", async ctx => {
 
 user.post("/post/signup", async ctx => {
   let userData = ctx.request.body;
-
   let getUserName = "SELECT user_name FROM user_data WHERE user_name=?";
   await query(getUserName, [userData.userName])
     .then(async result => {

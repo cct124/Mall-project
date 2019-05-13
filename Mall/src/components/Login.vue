@@ -91,7 +91,6 @@
 
 <script>
 import { buffer } from "./../assets/js/animation.js";
-import { signupPOST, signinPOST } from "./../assets/js/http.js";
 import { mapActions } from "vuex";
 export default {
   name: "Login",
@@ -115,7 +114,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setLoginShow", "setUserInfo"]),
+    ...mapActions(["getSignInPOST", "getSignUpPOST", "setLoginShow"]),
     // closeLogin() {
     //   this.$store.dispatch("setLoginShow");
     // },
@@ -157,39 +156,13 @@ export default {
       }
     },
     signin() {
-      signinPOST(this.signInData)
-        .then(result => {
-          if (result.code === 1) {
-            this.$message({
-              message: result.message,
-              type: "success"
-            });
-            this.setLoginShow();
-            this.setUserInfo(result.data);
-          } else {
-            this.$message.error(result.message);
-          }
-        })
-        .catch(error => {
-          throw error;
-        });
+      this.getSignInPOST(this.signInData);
+      this.setLoginShow();
     },
     signup() {
       if (!this.signinButton) return;
-      signupPOST(this.signUpData)
-        .then(result => {
-          if (result.code === 1) {
-            this.$message({
-              message: result.message,
-              type: "success"
-            });
-          } else {
-            this.$message.error(result.message);
-          }
-        })
-        .catch(error => {
-          throw error;
-        });
+      this.getSignUpPOST(this.signUpData);
+      this.setLoginShow();
     },
     // Tab切换动画
     signinShow(value) {
