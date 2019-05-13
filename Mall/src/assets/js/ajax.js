@@ -26,7 +26,14 @@ export default function ajax(
         pormise = axios.get(url);
       }
     } else if ("POST" === type) {
-      pormise = axios.post(url, payload);
+      if (authToken) {
+        const token = localfetch("mall_token");
+        pormise = axios.post(url, payload, {
+          headers: { Authorization: token }
+        });
+      } else {
+        pormise = axios.post(url, payload);
+      }
     }
 
     pormise

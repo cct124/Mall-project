@@ -84,7 +84,7 @@ export default {
           if (result.code === 1) {
             commit("getUserInfo", result.data);
           } else {
-            this._vm.$message.error("登陆已过期");
+            this._vm.$message.error(result.message);
           }
         })
         .catch(error => {

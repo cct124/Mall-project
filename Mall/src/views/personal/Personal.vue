@@ -54,10 +54,11 @@ export default {
     ...mapGetters(["stateUserInfo"])
   },
   methods: {
-    ...mapActions(["getUserInfo"]),
+    ...mapActions(["getUserInfo", "updataUserInfo"]),
     defineStatus(value) {
       new Promise((resolve, reject) => {
         if (value === "define") {
+          this.updataUserInfo({ user_name: this.stateUserInfo.info[0].value });
           resolve();
         }
         if (value === "cancel") {

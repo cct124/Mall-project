@@ -21,7 +21,7 @@ export const userInfoGET = () =>
 
 // 获取用户信息
 export const setUserInfoPOST = payload =>
-  ajax(BASE_URL + "/user/get/userinfo", {
+  ajax(BASE_URL + "/user/post/updatauserinfo", {
     payload,
     type: "POST",
     authToken: "token"

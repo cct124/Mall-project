@@ -22,7 +22,7 @@
             <router-link tag="li" :to="{name:'service'}">
               <svg-icon icon-class="service"/>售后服务
             </router-link>
-            <li>
+            <li @click="signOut">
               <svg-icon icon-class="sign-in"/>退出登陆
             </li>
           </ul>
@@ -50,6 +50,7 @@
 <script>
 import SearchInput from "./SearchInput";
 import { mapState, mapActions } from "vuex";
+import { localremove } from "./../assets/js/storage.js";
 
 export default {
   name: "top-nav",
@@ -63,7 +64,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setLoginShow"])
+    ...mapActions(["setLoginShow"]),
+    signOut() {
+      this.$router.push("/");
+      localremove("mall_token");
+      window.location.reload();
+    }
   },
   computed: {
     ...mapState({

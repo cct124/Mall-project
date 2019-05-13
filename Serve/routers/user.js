@@ -21,6 +21,40 @@ user.post("/test/post", async ctx => {
   ctx.body = ctx.request.body;
 });
 
+// 更新用户信息
+user.post("/post/updatauserinfo", async ctx => {
+  const token = ctx.header.authorization;
+  const upData = ctx.request.body.user_name;
+  let user_name = null;
+  await jwtVerify(token, key)
+    .then(decoded => {
+      user_name = decoded.user_name;
+    })
+    .catch(error => {
+      ctx.body = {
+        code: 2,
+        message: "登陆已过期"
+      };
+    });
+  if (user_name) {
+    const sql = "UPDATE user_data SET nickname=? WHERE user_name=?";
+    await query(sql, [upData, user_name])
+      .then(result => {
+        ctx.body = {
+          code: 1,
+          message: "更改成功"
+        };
+      })
+      .catch(error => {
+        ctx.body = {
+          code: 0,
+          message: "更改失败"
+        };
+      });
+  }
+});
+
+// 获取用户信息
 user.get("/get/userinfo", async ctx => {
   const token = ctx.header.authorization;
   let user_name = null;
@@ -31,37 +65,43 @@ user.get("/get/userinfo", async ctx => {
       user_id = decoded.user_id;
     })
     .catch(error => {
-      console.log("令牌过期或非法令牌");
-    });
-
-  const sql =
-    "SELECT user_id, user_name, email, phone, nickname, date FROM user_data WHERE user_name=? AND user_id=?";
-  await query(sql, [user_name, user_id])
-    .then(result => {
-      if (result != 0) {
-        result = JSON.parse(JSON.stringify(result))[0];
-        result.date = moment(result.date).format("YYYY-MM-DD");
-        ctx.body = {
-          code: 1,
-          message: "查询成功",
-          data: result
-        };
-      } else {
-        ctx.body = {
-          code: 0,
-          message: "查询失败"
-        };
-      }
-    })
-    .catch(error => {
       ctx.body = {
         code: 2,
-        message: "查询失败"
+        message: "登陆已过期"
       };
-      throw error;
     });
+
+  if (user_name) {
+    const sql =
+      "SELECT user_id, user_name, email, phone, nickname, date FROM user_data WHERE user_name=? AND user_id=?";
+    await query(sql, [user_name, user_id])
+      .then(result => {
+        if (result != 0) {
+          result = JSON.parse(JSON.stringify(result))[0];
+          result.date = moment(result.date).format("YYYY-MM-DD");
+          ctx.body = {
+            code: 1,
+            message: "查询成功",
+            data: result
+          };
+        } else {
+          ctx.body = {
+            code: 0,
+            message: "查询失败"
+          };
+        }
+      })
+      .catch(error => {
+        ctx.body = {
+          code: 3,
+          message: "查询失败"
+        };
+        throw error;
+      });
+  }
 });
 
+// 登陆
 user.post("/post/signin", async ctx => {
   const userData = ctx.request.body;
   userData.password = md5(userData.password, "mallUserPassword");
@@ -96,6 +136,7 @@ user.post("/post/signin", async ctx => {
   );
 });
 
+// 注册
 user.post("/post/signup", async ctx => {
   let userData = ctx.request.body;
   let getUserName = "SELECT user_name FROM user_data WHERE user_name=?";

@@ -3,7 +3,7 @@
     <div class="top-carousel">
       <div class="top-carousel-nav">
         <div class="top-carousel-nav-content">
-          <span @click="setLoginShow" title="登陆-注册">
+          <span @click="signinOrSignup" title="登陆-注册">
             <svg-icon icon-class="login_user"/>
           </span>
           <div class="top-carousel-nav-right">
@@ -101,12 +101,17 @@ export default {
   computed: {
     ...mapState({
       vue: store => store.data.vue,
-      user: store => store.userData.user
+      userInfo: store => store.userData.userInfo.user_name
     })
   },
   methods: {
     ...mapActions(["setLoginShow"]),
     // 监听resize事件
+    signinOrSignup() {
+      this.userInfo
+        ? this.$router.push({ name: "personal" })
+        : this.setLoginShow();
+    },
     getViewport() {
       window.addEventListener(
         "resize",
