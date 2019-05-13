@@ -1,9 +1,10 @@
-import { getTest, signupPOST } from "./../assets/js/http";
+import { getTest } from "./../assets/js/http";
 
 export default {
   state: {
     user: "User Data!",
-    loginShow: false
+    loginShow: false,
+    userInfo: null
   },
   getters: {},
   mutations: {
@@ -15,6 +16,9 @@ export default {
     },
     postSignUpPort(state, result) {
       console.log(result);
+    },
+    setUserInfo(state, payload) {
+      state.userInfo = payload;
     }
   },
   actions: {
@@ -26,10 +30,8 @@ export default {
         commit("getTextPort", result);
       });
     },
-    async postSignUpPort({ commit }, payload) {
-      await signupPOST(payload).then(result => {
-        commit("postSignUpPort", result);
-      });
+    setUserInfo({ commit }, payload) {
+      commit("setUserInfo", payload);
     }
   }
 };

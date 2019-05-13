@@ -1,7 +1,7 @@
 <template>
   <div class="top-nav">
     <div class="top-nav-left">
-      <el-dropdown class="left-avatar" v-if="false">
+      <el-dropdown class="left-avatar" v-if="userInfo">
         <span class="top-nav-left-dropdown-span">
           <img src="./../images/Avatar.png">
         </span>
@@ -25,7 +25,7 @@
           </ul>
         </el-dropdown-menu>
       </el-dropdown>
-      <span class="left-login" @click="setLoginShow" title="登陆-注册">
+      <span class="left-login" @click="setLoginShow" title="登陆-注册" v-else>
         <svg-icon icon-class="login_user"/>
       </span>
     </div>
@@ -46,7 +46,7 @@
 
 <script>
 import SearchInput from "./SearchInput";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "top-nav",
@@ -61,6 +61,11 @@ export default {
   },
   methods: {
     ...mapActions(["setLoginShow"])
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.userData.userInfo
+    })
   }
 };
 </script>

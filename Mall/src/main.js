@@ -5,7 +5,8 @@ import {
   CarouselItem,
   Dropdown,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Message
 } from "element-ui";
 import router from "./router";
 import store from "./store";
@@ -16,12 +17,13 @@ Vue.use(CarouselItem);
 Vue.use(Dropdown);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
+Vue.prototype.$message = Message;
 
 Vue.config.productionTip = false;
 
-Vue.filter('productPrice', (value) => {
+Vue.filter("productPrice", value => {
   return "￥" + value.toFixed(2);
-})
+});
 
 new Vue({
   router,

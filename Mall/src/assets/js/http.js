@@ -8,3 +8,6 @@ export const getTest = params => ajax(BASE_URL + "/user/test/post", params, "POS
 
 // 注册
 export const signupPOST = params => ajax(BASE_URL + "/user/post/signup", params, "POST");
+
+// 登陆
+export const signinPOST = params => ajax(BASE_URL + "/user/post/signin", params, "POST");

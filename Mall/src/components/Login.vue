@@ -15,7 +15,14 @@
       <div ref="signin" style="display:flex;" class="login-content-signin">
         <div class="signin-username">
           <svg-icon icon-class="nickname"/>
-          <input class="signin-input" id="username" name="username" type="text" placeholder="name">
+          <input
+            class="signin-input"
+            id="username"
+            v-model="signInData.userName"
+            name="username"
+            type="text"
+            placeholder="name"
+          >
         </div>
         <div class="signin-password">
           <svg-icon icon-class="password"/>
@@ -25,9 +32,10 @@
             name="password"
             type="password"
             placeholder="password"
+            v-model="signInData.password"
           >
         </div>
-        <div class="signin-button buttonPass" @click="getTextPort({name:'app'})">登陆</div>
+        <div class="signin-button buttonPass" @click="signin">登陆</div>
       </div>
       <div ref="signup" style="display:none;" class="login-content-signup">
         <div class="signup-username">
@@ -71,7 +79,7 @@
           <span ref="signupPassword" class="verification">密码必须包含大小写字母，长度6-16位</span>
         </div>
         <div
-          @click="signupPost"
+          @click="signup"
           :class="{ buttonPass: signinButton }"
           ref="signinButton"
           class="signin-button"
@@ -83,6 +91,7 @@
 
 <script>
 import { buffer } from "./../assets/js/animation.js";
+import { signupPOST, signinPOST } from "./../assets/js/http.js";
 import { mapActions } from "vuex";
 export default {
   name: "Login",
@@ -94,6 +103,10 @@ export default {
         email: null,
         password: null
       },
+      signInData: {
+        userName: null,
+        password: null
+      },
       signUpV: {
         userName: false,
         email: false,
@@ -102,7 +115,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setLoginShow", "postSignUpPort"]),
+    ...mapActions(["setLoginShow", "setUserInfo"]),
     // closeLogin() {
     //   this.$store.dispatch("setLoginShow");
     // },
@@ -143,9 +156,40 @@ export default {
           break;
       }
     },
-    signupPost() {
+    signin() {
+      signinPOST(this.signInData)
+        .then(result => {
+          if (result.code === 1) {
+            this.$message({
+              message: result.message,
+              type: "success"
+            });
+            this.setLoginShow();
+            this.setUserInfo(result.data);
+          } else {
+            this.$message.error(result.message);
+          }
+        })
+        .catch(error => {
+          throw error;
+        });
+    },
+    signup() {
       if (!this.signinButton) return;
-      this.postSignUpPort(this.signUpData);
+      signupPOST(this.signUpData)
+        .then(result => {
+          if (result.code === 1) {
+            this.$message({
+              message: result.message,
+              type: "success"
+            });
+          } else {
+            this.$message.error(result.message);
+          }
+        })
+        .catch(error => {
+          throw error;
+        });
     },
     // Tab切换动画
     signinShow(value) {
