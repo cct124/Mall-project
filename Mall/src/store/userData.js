@@ -5,7 +5,7 @@ import {
   userInfoGET,
   setUserInfoPOST
 } from "./../assets/js/http";
-import { localsave } from "./../assets/js/storage";
+import { localsave, localremove } from "./../assets/js/storage";
 
 export default {
   state: {
@@ -67,7 +67,7 @@ export default {
     }
   },
   actions: {
-    // 设置登陆头像显示和隐藏
+    // 显示和隐藏登录框
     setLoginShow({ commit }) {
       commit("setLoginShow");
     },
@@ -85,6 +85,7 @@ export default {
             commit("getUserInfo", result.data);
           } else {
             this._vm.$message.error(result.message);
+            localremove("mall_token");
           }
         })
         .catch(error => {

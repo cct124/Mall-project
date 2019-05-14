@@ -12,7 +12,7 @@
               <li>iPhone</li>
               <li>HUAWEI</li>
               <li>VIVO</li>
-              <li>
+              <li @click="shoppingcart">
                 <svg-icon icon-class="shoppingcart"/>
               </li>
               <search-input/>
@@ -126,6 +126,17 @@ export default {
     },
     productInfo() {
       this.$router.push({ name: "productinfo" });
+    },
+    shoppingcart() {
+      if (this.userInfo) {
+        this.$router.push("/shoppingcart");
+      } else {
+        this.$message({
+          message: "请登陆",
+          type: "warning"
+        });
+        this.setLoginShow();
+      }
     }
   }
 };

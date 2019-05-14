@@ -11,6 +11,7 @@
 import Login from "./components/Login";
 import { mapState, mapActions } from "vuex";
 import { localfetch } from "./assets/js/storage.js";
+import { dynamicRouter } from "./router.js";
 export default {
   name: "app",
   data() {
@@ -26,7 +27,8 @@ export default {
   },
   computed: {
     ...mapState({
-      loginShow: state => state.userData.loginShow
+      loginShow: state => state.userData.loginShow,
+      userInfo: store => store.userData.userInfo.user_name
     })
   },
   methods: {
@@ -46,6 +48,11 @@ export default {
         window.addEventListener("scroll", this.setScrollTp);
       } else {
         window.removeEventListener("scroll", this.setScrollTp);
+      }
+    },
+    userInfo() {
+      if (this.userInfo) {
+        this.$router.addRoutes(dynamicRouter);
       }
     }
   }

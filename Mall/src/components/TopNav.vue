@@ -1,7 +1,7 @@
 <template>
   <div class="top-nav">
     <div class="top-nav-left">
-      <el-dropdown class="left-avatar" v-if="userInfo.user_name">
+      <el-dropdown class="left-avatar" v-if="userInfo">
         <span class="top-nav-left-dropdown-span">
           <img src="./../images/Avatar.png">
         </span>
@@ -10,7 +10,7 @@
             <router-link tag="li" :to="{name:'personal'}">
               <svg-icon icon-class="Personal"/>个人中心
             </router-link>
-            <router-link tag="li" :to="{name:'shoppingcart'}">
+            <router-link tag="li" to="/shoppingcart">
               <svg-icon icon-class="shoppingcart"/>购物车
             </router-link>
             <router-link tag="li" :to="{name:'order'}">
@@ -38,9 +38,9 @@
         <li>iPhone</li>
         <li>HUAWEI</li>
         <li>VIVO</li>
-        <router-link to="/shoppingcart" tag="li">
+        <li @click="shoppingcart">
           <svg-icon icon-class="shoppingcart"/>
-        </router-link>
+        </li>
         <search-input/>
       </ul>
     </div>
@@ -69,11 +69,22 @@ export default {
       this.$router.push("/");
       localremove("mall_token");
       window.location.reload();
+    },
+    shoppingcart() {
+      if (this.userInfo) {
+        this.$router.push("/shoppingcart");
+      } else {
+        this.$message({
+          message: "请登陆",
+          type: "warning"
+        });
+        this.setLoginShow();
+      }
     }
   },
   computed: {
     ...mapState({
-      userInfo: state => state.userData.userInfo
+      userInfo: state => state.userData.userInfo.user_name
     })
   }
 };

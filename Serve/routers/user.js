@@ -9,10 +9,14 @@ const key = "shared-secret";
 
 // GET测试
 user.get("/test", async ctx => {
-  let sql = "SELECT * FROM user";
-  let dataList = await query(sql);
-  console.log(dataList);
-  ctx.body = dataList;
+  let sql = "SELECT * FROM commodity_data";
+  await query(sql)
+    .then(result => {
+      ctx.body = result[0];
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
 // POST测试
 user.post("/test/post", async ctx => {
@@ -123,7 +127,7 @@ user.post("/post/signin", async ctx => {
             user_id: result.user_id
           },
           key,
-          { expiresIn: 180 }
+          { expiresIn: 300 }
         );
         ctx.body = {
           code: 1,

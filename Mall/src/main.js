@@ -8,7 +8,7 @@ import {
   DropdownItem,
   Message
 } from "element-ui";
-import router from "./router";
+import { router } from "./router";
 import store from "./store";
 import "./icons";
 
